@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-oy0s9omeetql%@=d_y$*#7a4#xk1(fafw@@4l8q=vfgevs4le=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.29.3']
 
 
 # Application definition
@@ -54,7 +54,7 @@ ROOT_URLCONF = "medical_data_managemnt.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [Path(BASE_DIR, 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -110,6 +110,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [
+    Path(BASE_DIR, 'static')
+]
+STATIC_ROOT = Path(BASE_DIR, "assets")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
