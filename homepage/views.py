@@ -50,4 +50,8 @@ def user_login(request):
 
     return render(request, "user_login.html")
 
+def logout(request):
+
+    auth.logout(request)
+    return redirect("/")
 
