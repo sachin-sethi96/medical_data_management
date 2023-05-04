@@ -41,14 +41,10 @@
      </div>
    
    </nav>
-      
-      <div class="container mt-3">
-                   
-        <a href="registration/fill_form"><img src="{% static 'Images/register_image.png' %}" class="img-fluid" alt="Cinque Terre" 
-          width="504" height="206" ></a> <br>
-        <a href="medication/search_patient"><img src="{% static 'Images/medication_image.webp' %}" class="img-fluid" 
-          alt="Cinque Terre" width="504" height="206"></a>
-      </div> 
 
-  </body>
-  </html>
+   {% for patient in patient_obj %}
+    {{patient.name}} , {{patient.registration_number}}
+   {% endfor %}
+
+</body>
+</html>
