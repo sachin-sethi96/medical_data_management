@@ -7,6 +7,10 @@ from medical_data_managemnt.settings import BASE_DIR
 
 def display_home_page(request):
 
+    if request.user.is_authenticated:
+
+        return render(request, 'user_login.html')
+
     return render(request, 'index.html')
 
 def signup(request):

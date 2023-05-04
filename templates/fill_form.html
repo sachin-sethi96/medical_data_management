@@ -16,6 +16,7 @@
           $("#area_code_dropdown li a").click(function() {
             var selText = $(this).text();
             $('#area_code').html(selText);
+            $('#area_code_hidden').val(selText)
           
           });
       });
@@ -23,49 +24,84 @@
   </head>
 
   <body>
+
+    {% for message in messages %}
+      {{message}}
+    {% endfor %}
+
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark justify-content-end">
+        
+         <div class="container-fluid"> 
+        <a class="navbar-brand" href="#">
+          <img src="{% static 'Images/SOS Logo - White.png' %}" alt="Avatar Logo" style="width:40px;" class="rounded-pill"> 
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">  
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="navbar-brand nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                <img src="{% static 'Images/img_avatar1.png' %}" alt="Avatar Logo" style="width:40px;" class="rounded-pill">                 
+                <label class="pt  -1" href="#">{{request.user.username}}</label>                
+              </a>
+              <ul class="dropdown-menu">                              
+                <li>
+                  <a class="dropdown-item" href="/logout">Logout</a>
+                </li>
+              </ul>
+            </li>  
+          </ul>          
+        </div>
+      
+      </nav>
+
     <div class="container mt-3">
       <h2>Patient details</h2>
       <p>Enter patient details below</p>
-      <form>
-        <div class="row">
-          <div class="col">
-            <div class="form-floating flex-fill mb-3">                    
-              <input type="email" id="email" name="email" class="form-control" placeholder="Email"/>
-              <label class="form-label" for="form3Example1c">Email of patient</label>
-            </div>
-          </div>
-          <div class="col">
-            <div class="form-floating flex-fill mb-3">                    
-              <input type="text" id="name" name="Name" class="form-control" placeholder="Name"/>
-              <label class="form-label" for="form3Example1c">Name of patient</label>
-            </div>
-          </div>          
-        </div>
 
-        <div class="row">
-          <div class="col">
-            <div class="form-floating flex-fill mb-3">                    
-              <input type="number" id="age" name="age" class="form-control" placeholder="Age"/>
-              <label class="form-label" for="form3Example1c">Age of patient</label>
-            </div>
+      <form action="register" method="post">
+
+        {% csrf_token %}
+ 
+          <div class="form-floating flex-fill mb-3">                    
+            <input type="email" id="email" name="email" class="form-control" placeholder="Email" required/>
+            <label class="form-label" for="form3Example1c">Email of patient</label>
           </div>
-          <div class="col">
-            <div class="form-floating flex-fill mb-3">                    
-              <select class="form-select">
-                <option>Male</option>
-                <option>Female</option>
-                <option>Other</option>
-              </select>
-              <label class="form-label" for="form3Example1c">Gender of patient</label>
-            </div>
+        
+
+
+          <div class="form-floating flex-fill mb-3">                    
+            <input type="text" id="name" name="name" class="form-control" placeholder="Name" required/>
+            <label class="form-label" for="form3Example1c">Name of patient</label>
           </div>
-          
-        </div>          
+        
+
+        
+          <div class="form-floating flex-fill mb-3">                    
+            <input type="number" id="age" name="age" class="form-control" placeholder="Age" required/>
+            <label class="form-label" for="form3Example1c">Age of patient</label>
+          </div>
+        
+          <div class="form-floating flex-fill mb-3">                    
+            <select class="form-select" name="gender" required>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+            <label class="form-label" for="form3Example1c">Gender of patient</label>
+          </div>
+           
+        
         <div class="row">
           <div class="col">
             <div class="input-group mt-0 mb-3 dropdown">
+              <input type="text" name="area_code" id="area_code_hidden" hidden>
+
               <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" id="area_code">
-                +91
+               +91 
               </button>
               <ul class="dropdown-menu" id="area_code_dropdown">
                 <li><a class="dropdown-item" href="#" >+91</a></li>
@@ -73,29 +109,36 @@
                 <li><a class="dropdown-item" href="#">+94</a></li>
               </ul>
               <div class="form-floating">
-                <input type="text" class="form-control" placeholder="number">
+                <input type="text" class="form-control" placeholder="number" name="number" required/>
                 <label class="form-label">Contact number of patient</label>
               </div>
             </div>
           </div>
-          
-            <div class="col">
-              <div class="input-group mt-0 mb-3 dropdown">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" id="area_code">
-                  +91
-                </button>
-                <ul class="dropdown-menu" id="area_code_dropdown">
-                  <li><a class="dropdown-item" href="#" >+91</a></li>
-                  <li><a class="dropdown-item" href="#">+101</a></li>
-                  <li><a class="dropdown-item" href="#">+94</a></li>
-                </ul>
-                <div class="form-floating">
-                  <input type="text" class="form-control" placeholder="number">
-                  <label class="form-label">Whatsapp number of patient</label>
-                </div>
-                </div>
-             
+
+          <div class="col">
+            <div class="form-floating flex-fill mb-3 mt-3"> 
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="check1" name="is_whatsapp_num" checked>
+                <label class="form-check-label">Same number on whatsapp?</label>
+              </div>
+            </div>
+      
           </div>
+        </div>  
+          
+          <div class="form-floating flex-fill mb-3">                    
+            <select class="form-select" name="location" required>
+              <option>Delhi</option>
+              <option>NCR</option>
+              <option>Outside Delhi</option>
+            </select>
+            <label class="form-label" for="form3Example1c">Location of patient</label>
+          </div>                  
+                      
+      
+        <input type="submit" class="btn btn-primary" style="width: 200px; height: 50px">
+        
+
       </form>
     </div>
 
