@@ -52,7 +52,11 @@ def login(request):
     
 def user_login(request):
 
-    return render(request, "user_login.html")
+    if request.user.is_authenticated:
+
+        return render(request, "user_login.html")
+
+    return render(request, 'index.html')
 
 def logout(request):
 

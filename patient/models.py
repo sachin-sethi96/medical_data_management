@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-
 class Patient(models.Model):
 
     gender_choices = [
@@ -27,6 +26,14 @@ class Patient(models.Model):
     is_whatsapp_num = models.BooleanField()
     location = models.CharField(max_length=13, choices=location_choices)
     registered_by = models.CharField(max_length=31)
+
+
+class Medication(models.Model):
+
+    time_stamp = models.DateTimeField(auto_now=True)
+    patient = models.ForeignKey(Patient, on_delete=models.PROTECT)
+    medicines_already_have = models.TextField()
+    medicines_recommend = models.TextField()
 
 
 
